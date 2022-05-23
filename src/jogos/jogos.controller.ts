@@ -38,7 +38,7 @@ export class JogosController {
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Editar uma mesa pelo ID',
+    summary: 'Editar um jogo pelo ID',
   })
   update(@Param('id') id: string, @Body() dto: UpdateJogosDto): Promise<Jogos> {
     return this.jogosService.update(id, dto);

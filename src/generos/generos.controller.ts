@@ -30,7 +30,7 @@ export class GenerosController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Visualizar uma mesa',
+    summary: 'Visualizar um genero',
   })
   findOne(@Param('id') id: string): Promise<Generos> {
     return this.generosService.findOne(id);
@@ -49,7 +49,7 @@ export class GenerosController {
 
   @Post()
   @ApiOperation({
-    summary: 'Criar uma mesa',
+    summary: 'Criar um genero',
   })
   create(@Body() createGenerosDto: CreateGenerosDto) {
     return this.generosService.create(createGenerosDto);
