@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Patch, Delete, Post, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateGenerosDto } from './dto/create-generos.dto';
 import { Generos } from './entities/generos.entity';
