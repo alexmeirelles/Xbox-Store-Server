@@ -60,5 +60,4 @@ export class JogosController {
   delete(@Param('id') id: string) {
     this.jogosService.delete(id);
   }
-
 }

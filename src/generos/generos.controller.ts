@@ -40,7 +40,10 @@ export class GenerosController {
   @ApiOperation({
     summary: 'Editar um genero pelo ID',
   })
-  update(@Param('id') id: string, @Body() dto: UpdateGenerosDto): Promise<Genero> {
+  update(
+    @Param('id') id: string,
+    @Body() dto: UpdateGenerosDto,
+  ): Promise<Generos> {
     return this.generosService.update(id, dto);
   }
 
@@ -60,5 +63,4 @@ export class GenerosController {
   delete(@Param('id') id: string) {
     this.generosService.delete(id);
   }
-
 }
