@@ -9,21 +9,29 @@ datasource db {
 }
 
 model Jogos {
-  id     String @id @default(uuid())
+  id                 String @id @default(uuid())
+  title              String
+  coverImageUrl      String
+  description        String
+  year               Int
+  imdbScore          Int
+  trailerYoutubeUrl  String
+  gameplayYoutubeUrl String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   generos Generos[]
   perfis Perfis[]
+
   @@map("jogo")
 }
 
 model Generos {
-  id     String @id @default(uuid())
+  name String @unique @id
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   jogos Jogos[]
   @@map("genero")
@@ -36,8 +44,10 @@ model Usuarios {
   password String
   cpf      String  @unique
   isAdmin  Boolean
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
   Perfil Perfis[]
   @@map("usuario")
 }
@@ -48,6 +58,8 @@ model Perfis {
   imageUrl String
     user Usuarios @relation(fields: [userId], references: [id])
   userId String @map("user_id")
+
   Jogos Jogos[]
+  
   @@map("perfil")
 }
