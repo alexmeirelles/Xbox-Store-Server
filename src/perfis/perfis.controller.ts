@@ -1,34 +1,62 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { PerfisService } from './perfis.service';
-import { CreatePerfiDto } from './dto/create-perfi.dto';
-import { UpdatePerfiDto } from './dto/update-perfi.dto';
+import { CreatePerfilDto } from './dto/create-perfil.dto';
+import { UpdatePerfilDto } from './dto/update-perfil.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Perfis')
 @Controller('perfis')
 export class PerfisController {
   constructor(private readonly perfisService: PerfisService) {}
 
   @Post()
-  create(@Body() createPerfiDto: CreatePerfiDto) {
-    return this.perfisService.create(createPerfiDto);
+  @ApiOperation({
+    summary: 'Criar um perfil',
+  })
+  create(@Body() createPerfilDto: CreatePerfilDto) {
+    return this.perfisService.create(createPerfilDto);
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Lista todos Perfis',
+  })
   findAll() {
     return this.perfisService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Lista um perfil',
+  })
   findOne(@Param('id') id: string) {
-    return this.perfisService.findOne(+id);
+    return this.perfisService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePerfiDto: UpdatePerfiDto) {
-    return this.perfisService.update(+id, updatePerfiDto);
+  @ApiOperation({
+    summary: 'Edita um perfil',
+  })
+  update(@Param('id') id: string, @Body() updatePerfilDto: UpdatePerfilDto) {
+    return this.perfisService.update(id, updatePerfilDto);
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary: 'Deleta um perfil',
+  })
   remove(@Param('id') id: string) {
-    return this.perfisService.remove(+id);
+    return this.perfisService.remove(id);
   }
 }

@@ -12,6 +12,10 @@ async function bootstrap() {
     .setTitle('XBOX')
     .setDescription('Aplicação para gestão DE JOGOS')
     .setVersion('1.0.0')
+    .addTag('jogos')
+    .addTag('perfis')
+    .addTag('usuarios')
+    .addTag('generos')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
