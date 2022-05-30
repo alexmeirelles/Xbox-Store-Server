@@ -3,5 +3,6 @@ export class CreateUsuarioDto {
   email: string;
   password: string;
   confirmPassword: string;
+  cpf: string;
   isAdmin: boolean;
 }

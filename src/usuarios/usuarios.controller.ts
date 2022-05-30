@@ -9,7 +9,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { UsuariosService } from './usuarios.service';
+import { UsuarioService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -17,7 +17,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 @ApiTags('Usuarios')
 @Controller('usuarios')
 export class UsuariosController {
-  constructor(private readonly usuariosService: UsuariosService) {}
+  constructor(private readonly usuariosService: UsuarioService) {}
 
   @Post()
   @ApiOperation({ summary: 'Criar um Usuário' })
@@ -54,7 +54,7 @@ export class UsuariosController {
   @ApiOperation({
     summary: 'Deletar pelo id',
   })
-  remove(@Param('id') id: string) {
-    return this.usuariosService.remove(id);
+  delete(@Param('id') id: string) {
+    return this.usuariosService.delete(id);
   }
 }
