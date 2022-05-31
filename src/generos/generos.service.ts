@@ -12,18 +12,18 @@ export class GenerosService {
     return this.prisma.generos.findMany();
   }
 
-  async findById(id: string): Promise<Generos> {
-    const record = await this.prisma.generos.findUnique({ where: { id } });
+  async findById(name: string): Promise<Generos> {
+    const record = await this.prisma.generos.findUnique({ where: { name } });
 
     if (!record) {
-      throw new NotFoundException(`Registro com o '${id}' não encontrado.`);
+      throw new NotFoundException(`Registro com o '${name}' não encontrado.`);
     }
 
     return record;
   }
 
-  findOne(id: string): Promise<Generos> {
-    return this.prisma.generos.findUnique({ where: { id } });
+  findOne(name: string): Promise<Generos> {
+    return this.findById(name);
   }
 
   create(dto: CreateGenerosDto): Promise<Generos> {
@@ -32,19 +32,19 @@ export class GenerosService {
     return this.prisma.generos.create({ data });
   }
 
-  async update(id: string, dto: UpdateGenerosDto): Promise<Generos> {
-    await this.findById(id);
+  async update(name: string, dto: UpdateGenerosDto): Promise<Generos> {
+    await this.findById(name);
 
     const data: Partial<Generos> = { ...dto };
 
     return this.prisma.generos.update({
-      where: { id },
+      where: { name },
       data,
     });
   }
-  async delete(id: string) {
-    await this.findById(id);
+  async delete(name: string) {
+    await this.findById(name);
 
-    await this.prisma.generos.delete({ where: { id } });
+    await this.prisma.generos.delete({ where: { name } });
   }
 }

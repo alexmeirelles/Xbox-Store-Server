@@ -9,7 +9,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { PerfisService } from './perfis.service';
+import { PerfilService } from './perfis.service';
 import { CreatePerfilDto } from './dto/create-perfil.dto';
 import { UpdatePerfilDto } from './dto/update-perfil.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -17,7 +17,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 @ApiTags('Perfis')
 @Controller('perfis')
 export class PerfisController {
-  constructor(private readonly perfisService: PerfisService) {}
+  constructor(private readonly perfisService: PerfilService) {}
 
   @Post()
   @ApiOperation({
@@ -56,7 +56,7 @@ export class PerfisController {
   @ApiOperation({
     summary: 'Deleta um perfil',
   })
-  remove(@Param('id') id: string) {
-    return this.perfisService.remove(id);
+  delete(@Param('id') id: string) {
+    return this.perfisService.delete(id);
   }
 }

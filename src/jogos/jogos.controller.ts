@@ -33,7 +33,7 @@ export class JogosController {
     summary: 'Visualizar um jogo',
   })
   findOne(@Param('id') id: string): Promise<Jogos> {
-    return this.jogosService.findOne(id);
+    return this.jogosService.findById(id);
   }
 
   @Patch(':id')

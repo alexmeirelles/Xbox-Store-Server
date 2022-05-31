@@ -6,5 +6,5 @@ export class Perfil {
   title: string;
   imageUrl: string;
   user?: Usuario;
-  games?: Jogos[];
+  jogos?: Jogos[];
 }

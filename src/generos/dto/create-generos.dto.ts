@@ -2,9 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateGenerosDto {
   @ApiProperty({
-    description: 'O número da mesa',
+    description: 'O nome do gênero',
     example: 'xxxxx',
   })
-  id: string;
   name: string;
 }
