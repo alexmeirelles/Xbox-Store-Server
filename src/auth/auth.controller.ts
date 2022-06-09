@@ -12,7 +12,7 @@ export class AuthController {
   @Post()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
-    summary: 'Recebe Token authtenticacao',
+    summary: 'Recebe Token autenticacao',
   })
   login(@Body() loginDto: LoginDto): Promise<LoginResponseDto> {
     return this.authService.login(loginDto);

@@ -39,7 +39,7 @@ model Generos {
 
 model Usuarios {
   id       String  @id @default(uuid())
-  name     String
+  name     String  @unique
   email    String  @unique
   password String
   cpf      String  @unique
@@ -60,6 +60,6 @@ model Perfis {
   userId String @map("user_id")
 
   Jogos Jogos[]
-  
+
   @@map("perfil")
 }

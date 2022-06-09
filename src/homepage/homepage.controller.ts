@@ -10,9 +10,10 @@ export class HomepageController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Pagina principal com lista de jogos favoritos listador por gêneros.'
+    summary:
+      'Pagina principal com lista de jogos favoritos listador por gêneros.',
   })
-  findOne(@Param('id') id:string) {
+  findOne(@Param('id') id: string) {
     return this.homepageService.findOne(id);
   }
 }
