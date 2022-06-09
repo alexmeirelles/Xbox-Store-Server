@@ -1,37 +1,31 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { LoginDto } from './dto/login.dto';
-import { LoginResponseDto } from './dto/login.response.dto';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class AuthService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly jwtService: JwtService,
-  ) {}
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor(private readonly prisma: PrismaService) {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: process.env.JWT_SECRET,
+    });
+  }
 
-  async login(loginDto: LoginDto): Promise<LoginResponseDto> {
-    const { name, password } = loginDto;
-
-    const user = await this.prisma.usuarios.findUnique({ where: { name } });
+  async validate(payload: { nickname: string }) {
+    const user = await this.prisma.usuarios.findUnique({
+      where: { name: payload.nickname },
+    });
 
     if (!user) {
-      throw new UnauthorizedException('Usuário e/ou senha inválidos');
-    }
-
-    const isHashValid = await bcrypt.compare(password, user.password);
-
-    if (!isHashValid) {
-      throw new UnauthorizedException('Usuário e/ou senha inválidos');
+      throw new UnauthorizedException(
+        'Usuário não existe ou não está autenticado',
+      );
     }
 
     delete user.password;
 
-    return {
-      token: this.jwtService.sign({ name }),
-      user,
-    };
+    return user;
   }
 }
