@@ -8,9 +8,19 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { PerfisModule } from './perfis/perfis.module';
 import { HomepageModule } from './homepage/homepage.module';
 import { AuthModule } from './auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
-  imports: [JogosModule, GenerosModule, PrismaModule, UsuariosModule, PerfisModule, HomepageModule, AuthModule],
+  imports: [
+    JogosModule,
+    GenerosModule,
+    PrismaModule,
+    UsuariosModule,
+    PerfisModule,
+    HomepageModule,
+    AuthModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

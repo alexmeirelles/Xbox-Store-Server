@@ -8,14 +8,17 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateGenerosDto } from './dto/create-generos.dto';
 import { Generos } from './entities/generos.entity';
 import { GenerosService } from './generos.service';
 import { UpdateGenerosDto } from './dto/update-generos.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('generos')
+@UseGuards(AuthGuard())
 @Controller('generos')
 export class GenerosController {
   constructor(private generosService: GenerosService) {}
