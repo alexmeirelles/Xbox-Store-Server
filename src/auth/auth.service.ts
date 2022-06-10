@@ -1,31 +1,39 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { LoginResponseDto } from './dto/login.response.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly prisma: PrismaService) {
-    super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET,
-    });
-  }
+export class AuthService {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
 
-  async validate(payload: { nickname: string }) {
-    const user = await this.prisma.usuarios.findUnique({
-      where: { name: payload.nickname },
-    });
+  async login(loginDto: LoginDto): Promise<LoginResponseDto> {
+    const { name, password } = loginDto;
+
+    // Procura e checa se o user existe, usando o nickname
+    const user = await this.prisma.usuarios.findUnique({ where: { name } });
 
     if (!user) {
-      throw new UnauthorizedException(
-        'Usuário não existe ou não está autenticado',
-      );
+      throw new UnauthorizedException('Usuário e/ou senha inválidos');
+    }
+
+    // Valida se a senha informada é correta
+    const isHashValid = await bcrypt.compare(password, user.password);
+
+    if (!isHashValid) {
+      throw new UnauthorizedException('Usuário e/ou senha inválidos');
     }
 
     delete user.password;
 
-    return user;
+    return {
+      token: this.jwtService.sign({ name }),
+      user,
+    };
   }
 }
