@@ -38,14 +38,14 @@ export class PerfilService {
     return this.prisma.perfis.findUnique({ where: { id } });
   }
 
-  async create(dto: CreatePerfilDto): Promise<Perfil> {
+  async create(userId: string, dto: CreatePerfilDto): Promise<Perfil> {
     if (dto.gameId) {
       return await this.prisma.perfis
         .create({
           data: {
             title: dto.title,
             imageUrl: dto.imageUrl,
-            userId: dto.userId,
+            userId: userId,
             Jogos: {
               connect: {
                 id: dto.gameId,
@@ -61,7 +61,7 @@ export class PerfilService {
           data: {
             title: dto.title,
             imageUrl: dto.imageUrl,
-            userId: dto.userId,
+            userId: userId,
           },
           include: { Jogos: true },
         })

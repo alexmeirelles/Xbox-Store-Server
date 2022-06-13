@@ -16,6 +16,7 @@ export class CreatePerfilDto {
   })
   @IsString()
   imageUrl: string;
+
   @IsString()
   @ApiProperty({
     description: 'id do usuário(obrigatório)',

@@ -12,6 +12,8 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginResponseDto } from './dto/login.response.dto';
 import { LoginDto } from './dto/login.dto';
+import { LoggedUser } from './logged-user.decorator';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -33,7 +35,7 @@ export class AuthController {
     summary: 'Retorna o usuário autenticado no momento',
   })
   @ApiBearerAuth()
-  profile() {
-    return { message: 'Autenticação bem sucedida' };
+  profile(@LoggedUser() user: Usuario) {
+    return user;
   }
 }

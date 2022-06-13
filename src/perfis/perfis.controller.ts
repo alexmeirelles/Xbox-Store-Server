@@ -15,6 +15,8 @@ import { CreatePerfilDto } from './dto/create-perfil.dto';
 import { UpdatePerfilDto } from './dto/update-perfil.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { LoggedUser } from 'src/auth/logged-user.decorator';
+import { Usuarios } from '@prisma/client';
 
 @ApiTags('Perfis')
 @UseGuards(AuthGuard())
@@ -27,8 +29,11 @@ export class PerfisController {
   @ApiOperation({
     summary: 'Criar um perfil',
   })
-  create(@Body() createPerfilDto: CreatePerfilDto) {
-    return this.perfisService.create(createPerfilDto);
+  create(
+    @LoggedUser() user: Usuarios,
+    @Body() createPerfilDto: CreatePerfilDto,
+  ) {
+    return this.perfisService.create(user.id, createPerfilDto);
   }
 
   @Get()
