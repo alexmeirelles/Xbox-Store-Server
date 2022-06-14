@@ -17,7 +17,7 @@ export class HomepageService {
             isAdmin: true,
           },
         },
-        Jogos: {
+        jogos: {
           select: {
             title: true,
             coverImageUrl: true,
@@ -28,6 +28,11 @@ export class HomepageService {
                 name: true,
               },
             },
+          },
+        },
+        favoritos: {
+          select: {
+            jogos: true,
           },
         },
       },
