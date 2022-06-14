@@ -17,6 +17,7 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { LoggedUser } from 'src/auth/logged-user.decorator';
 import { Usuarios } from '@prisma/client';
+import { Perfil } from './entities/perfil.entity';
 
 @ApiTags('Perfis')
 @UseGuards(AuthGuard())
@@ -40,7 +41,7 @@ export class PerfisController {
   @ApiOperation({
     summary: 'Lista todos Perfis',
   })
-  findAll() {
+  findAll(): Promise<Perfil[]> {
     return this.perfisService.findAll();
   }
 
@@ -48,7 +49,7 @@ export class PerfisController {
   @ApiOperation({
     summary: 'Lista um perfil',
   })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<Perfil> {
     return this.perfisService.findOne(id);
   }
 
