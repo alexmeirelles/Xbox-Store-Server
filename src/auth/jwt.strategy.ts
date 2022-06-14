@@ -13,9 +13,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: { email: string }) {
+  async validate(payload: { name: string }) {
     const user = await this.prisma.usuarios.findUnique({
-      where: { email: payload.email },
+      where: { email: payload.name },
     });
 
     if (!user) {
@@ -23,7 +23,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         'Usuário não existe ou não está autenticado',
       );
     }
-
     delete user.password;
 
     return user;
