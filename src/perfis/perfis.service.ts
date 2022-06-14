@@ -16,7 +16,7 @@ export class PerfilService {
     return this.prisma.perfis.findMany({
       include: {
         user: true,
-        Jogos: true,
+        jogos: true,
       },
     });
   }
@@ -24,7 +24,7 @@ export class PerfilService {
   async findById(id: string): Promise<Perfil> {
     const record = await this.prisma.perfis.findUnique({
       where: { id: id },
-      include: { Jogos: true },
+      include: { jogos: true },
     });
 
     if (!record) {
@@ -46,13 +46,13 @@ export class PerfilService {
             title: dto.title,
             imageUrl: dto.imageUrl,
             userId: userId,
-            Jogos: {
+            jogos: {
               connect: {
                 id: dto.gameId,
               },
             },
           },
-          include: { Jogos: true, user: true },
+          include: { jogos: true, user: true },
         })
         .catch(this.handleError);
     } else {
@@ -63,7 +63,7 @@ export class PerfilService {
             imageUrl: dto.imageUrl,
             userId: userId,
           },
-          include: { Jogos: true },
+          include: { jogos: true },
         })
         .catch(this.handleError);
     }
@@ -79,7 +79,7 @@ export class PerfilService {
         imageUrl: dto.imageUrl,
         userId: dto.userId,
       },
-      include: { Jogos: true },
+      include: { jogos: true },
     });
   }
   async delete(id: string) {
