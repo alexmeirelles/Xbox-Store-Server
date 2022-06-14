@@ -10,7 +10,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateGenerosDto } from './dto/create-generos.dto';
 import { Generos } from './entities/generos.entity';
 import { GenerosService } from './generos.service';
@@ -19,6 +19,7 @@ import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('generos')
 @UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('generos')
 export class GenerosController {
   constructor(private generosService: GenerosService) {}
