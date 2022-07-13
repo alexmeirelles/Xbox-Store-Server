@@ -41,7 +41,7 @@ export class JogosService {
       gameplayYoutubeUrl: dto.gameplayYoutubeUrl,
       generos: {
         connect: {
-          name: dto.perfilNome,
+          name: dto.generoNome,
         },
       },
     };
@@ -63,7 +63,7 @@ export class JogosService {
           name: gameAtual.generos[0].name,
         },
         connect: {
-          name: dto.perfilNome,
+          name: dto.generoNome,
         },
       },
     };

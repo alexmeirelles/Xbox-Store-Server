@@ -61,7 +61,7 @@ export class UsuarioService {
 
     return this.prisma.usuarios
       .create({
-        data,
+        data: { ...data },
         select: this.usuarioSelect,
       })
       .catch(this.handleError);

@@ -58,5 +58,5 @@ export class CreateJogosDto {
     example: 'terror',
   })
   @IsString()
-  perfilNome: string;
+  generoNome: string;
 }
